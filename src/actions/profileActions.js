@@ -1,9 +1,9 @@
 "use server";
 
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import dbConnect from "@/dbConfig/dbConfig";
+// import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+// import dbConnect from "@/dbConfig/dbConfig";
 import Profile from "@/models/profileModel";
-import { getServerSession } from "next-auth";
+// import { getServerSession } from "next-auth";
 
 export async function createProfile(profileData) {
   await dbConnect();

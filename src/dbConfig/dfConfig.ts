@@ -3,7 +3,7 @@ import mongoose from "mongoose"
 
 export async function dbconnect() {
     try {
-        mongoose.connect("mongodb://127.0.0.1:27017/portfolio/UserDb")
+        mongoose.connect("mongodb://127.0.0.1:27017/UserDb")
         const connection = mongoose.connection
 
         connection.on('connected', () => {
