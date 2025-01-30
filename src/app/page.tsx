@@ -35,7 +35,7 @@ const App = () => {
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-white text-center py-6">
+      <footer className="bg-blue-500 text-white text-center py-6">
         <p>&copy; 2025 Brand. All rights reserved.</p>
       </footer>
     </div>

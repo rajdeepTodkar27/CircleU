@@ -18,7 +18,8 @@ function Navbar() {
             <button title="About " className="text-white" onClick={() => router.push("/dashboard/About")}>About</button>
             <button title="About " className="text-white" onClick={() => router.push("/dashboard/Services")}>Services</button>
             {/* <Upload className="cursor-pointer text-purple-100 border rounded-sm h-7 w-7 p-1" /> */}
-            <span className="text-lg cursor-pointer text-purple-200" onClick={() => router.push("/dashboard/contact-us")}>Contact Us</span>
+            {/* <span className="text-lg cursor-pointer text-purple-200" onClick={() => router.push("/dashboard/contact-us")}>Contact Us</span> */}
+            <span className="text-lg cursor-pointer text-purple-200" onClick={() => router.push("/dashboard/profile")}>Profile</span>
             <UserButton />
           </SignedIn>
         </h2>

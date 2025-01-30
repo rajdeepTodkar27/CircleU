@@ -46,15 +46,15 @@ const dashboard = () => {
   
   return (
     <div className="overflow-auto scrollbar-hide">
-      <h1 className="text-center mt-5 font-bold text-3xl">Welcome to CircleU </h1>
+      <h1 className="text-center mt-5 font-bold text-4xl text-blue-500">Welcome to CircleU </h1>
         <p className="text-center text-xl pt-4">Connect with your college community, join groups, and participate in events</p>
       <div className="upcoming-events flex flex-col ">
-        <h1 className="pl-10 mt-5 mb-9 text-center font-bold text-3xl">Upcoming Events.......</h1>
-        <div className="card-container flex flex-wrap px-5 pl-10  gap-5">
+        <h1 className="pl-10 mt-5 mb-9  font-bold text-3xl text-blue-500">Upcoming Events.......</h1>
+        <div className="card-container flex flex-wrap justify-center px-5 pl-10  gap-5">
           
           {events.length > 0 ? (
             events.map((event) => (
-              <div key={event._id} className="card p-5  border-2 w-[20vw] text-center bg-white rounded-lg shadow-md">
+              <div key={event._id} className="card p-5 border-2 w-[20vw] text-center bg-white rounded-lg shadow-md">
                 <h1 className="font-bold">{event.event_name}</h1>
                 <p className="text-sm">{event.organization_name}</p>
                 <p className="text-xs text-gray-600">Date: {new Date(event.event_date).toDateString()}</p>
