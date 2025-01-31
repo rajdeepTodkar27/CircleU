@@ -173,7 +173,7 @@ function handleSkillsChange(event: React.ChangeEvent<HTMLInputElement>) {
           </div>
           <div className="space-y-2">
             <Label htmlFor="Department">Department</Label>
-            <Input id="Department" name="Department" required value={formData.department} onChange={handleChange} />
+            <Input id="department" name="department" required value={formData.department} onChange={handleChange} />
           </div>
 
           <div className="space-y-2">

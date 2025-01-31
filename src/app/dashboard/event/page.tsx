@@ -82,7 +82,7 @@ const ContactPage: React.FC = () => {
   }, [user])
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen p-4 mt-[450px] sm:mt-[430px]">
+    <div className="flex flex-col items-center justify-center min-h-screen p-4  ">
       <h1 className='font-bold text-4xl mb-4'>Fill Information for Event</h1>
       <div className="w-full max-w-lg bg-white p-6 rounded-lg shadow-lg">
         <form className="flex flex-col space-y-4">

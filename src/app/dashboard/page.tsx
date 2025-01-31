@@ -23,7 +23,7 @@ const dashboard = () => {
   const [events, setEvents] = useState<Event[]>([]);
   
  const handleClick1 = () => {
-    router.push("/dashboard/booking-page")
+    router.push("/dashboard/Groups")
   }
  const handleClick2 = () => {
     router.push("/dashboard/groupmate")
@@ -32,6 +32,9 @@ const dashboard = () => {
     router.push("/dashboard/event")
   }
  
+  const handleClick4 = () => {
+    router.push("/dashboard/participate")
+  }
   useEffect(() => {
     const fetchEvents = async () => {
       try {
@@ -45,12 +48,12 @@ const dashboard = () => {
   }, []);
   
   return (
-    <div className="overflow-auto scrollbar-hide">
+    <div className="overflow-auto scrollbar-hide p-5 h-full ">
       <h1 className="text-center mt-5 font-bold text-4xl text-blue-500">Welcome to CircleU </h1>
         <p className="text-center text-xl pt-4">Connect with your college community, join groups, and participate in events</p>
       <div className="upcoming-events flex flex-col ">
         <h1 className="pl-10 mt-5 mb-9  font-bold text-3xl text-blue-500">Upcoming Events.......</h1>
-        <div className="card-container flex flex-wrap justify-center px-5 pl-10  gap-5">
+        <div className="card-container h-44 relative flex flex-wrap justify-center px-5 pl-10  gap-5">
           
           {events.length > 0 ? (
             events.map((event) => (
@@ -58,7 +61,10 @@ const dashboard = () => {
                 <h1 className="font-bold">{event.event_name}</h1>
                 <p className="text-sm">{event.organization_name}</p>
                 <p className="text-xs text-gray-600">Date: {new Date(event.event_date).toDateString()}</p>
-                <button className="mt-2 p-2 px-4 bg-blue-500 text-white rounded-lg">Join</button>
+                <div className="btncont absolute flex text-center bottom-4 ml-24 justify-center items-center">
+
+                <button className="mt-2  p-2 px-4   bg-blue-500 text-white rounded-lg" onClick={handleClick4}>Join</button>
+                </div>
               </div>
             ))
           ) : (

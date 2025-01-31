@@ -46,10 +46,7 @@ const About = () => {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-gray-900 text-white text-center py-6">
-        <p>&copy; 2025 Tech Titans. All rights reserved.</p>
-      </footer>
+     
     </div>
   );
 }
