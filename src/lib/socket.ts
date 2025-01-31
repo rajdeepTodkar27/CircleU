@@ -1,37 +1,38 @@
-import { Server as SocketIOServer } from 'socket.io';
-import { Server } from 'http';
+
+import { Server as HttpServer } from "http";
+import { Server as SocketIOServer } from "socket.io";
 
 let io: SocketIOServer | null = null;
 
-export function initializeSocket(server: Server) {
+export const initSocket = (server: HttpServer) => {
   if (!io) {
-    console.log('Initializing Socket.IO');
     io = new SocketIOServer(server, {
-      path: '/socket.io',
+      path: "/api/socket",
       cors: {
-        origin: '*',
+        origin: "*",
+        methods: ["GET", "POST"],
       },
     });
 
-    io.on('connection', (socket) => {
-      console.log('A user connected');
+    io.on("connection", (socket) => {
+      console.log("New client connected:", socket.id);
 
-      socket.on('send-message', (data) => {
-        console.log('Message received:', data);
-        io?.emit('receive-message', data); // Broadcast message
+      socket.on("join-room", (roomId: string) => {
+        socket.join(roomId);
       });
 
-      socket.on('disconnect', () => {
-        console.log('User disconnected');
+      socket.on("send-message", (message: { roomId: string; content: string; userId: string; username: string }) => {
+        io?.to(message.roomId).emit("receive-message", message);
+      });
+
+      socket.on("leave-room", (roomId: string) => {
+        socket.leave(roomId);
+      });
+
+      socket.on("disconnect", () => {
+        console.log("Client disconnected:", socket.id);
       });
     });
   }
   return io;
-}
-
-export function getIO() {
-  if (!io) {
-    throw new Error('Socket.io has not been initialized');
-  }
-  return io;
-}
+};

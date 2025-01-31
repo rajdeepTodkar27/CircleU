@@ -13,9 +13,6 @@ export interface IEvent extends Document {
   contact_person_name: string;
   contact_person_email: string;
   contact_person_phone: string;
-  email: string;
-  subject: string;
-  message: string;
 }
 
 const EventSchema: Schema = new Schema(
@@ -32,9 +29,6 @@ const EventSchema: Schema = new Schema(
     contact_person_name: { type: String, required: true },
     contact_person_email: { type: String, required: true },
     contact_person_phone: { type: String, required: true },
-    email: { type: String, required: true },
-    subject: { type: String, required: true },
-    message: { type: String, required: true }
   },
   { timestamps: true }
 );

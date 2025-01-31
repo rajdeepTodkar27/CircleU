@@ -6,10 +6,10 @@ const App = () => {
     <div className="bg-gray-100">
       
       {/* Hero Section */}
-      <header className="bg-blue-500 text-white text-center py-20">
-        <h2 className="text-4xl font-bold">Welcome to CircleU</h2>
-        <p className="mt-4 px-36 text-lg">In today's fast-paced world, staying connected with like-minded individuals is key to meaningful collaboration. Our platform helps college students easily create or join hackathon groups, and participate in events—all in one place. Whether you're organizing an event or looking to collaborate, we make it simple to stay connected.</p>
-        <Link href="/dashboard" className="mt-6 inline-block bg-white text-blue-500 px-6 py-3 rounded-lg font-semibold shadow-md hover:bg-gray-200">Get Started</Link>
+      <header className="bg-blue-500 h-[60vh] text-white text-center py-20">
+        <h2 className="text-5xl font-bold">Welcome to CircleU</h2>
+        <p className="mt-6 px-36 text-lg">In today's fast-paced world, staying connected with like-minded individuals is key to meaningful collaboration. Our platform helps college students easily create or join hackathon groups, and participate in events—all in one place. Whether you're organizing an event or looking to collaborate, we make it simple to stay connected.</p>
+        <Link href="/dashboard" className="mt-10 inline-block  bg-white text-blue-500 px-6 py-3 rounded-xl font-semibold shadow-md hover:bg-gray-200">Get Started</Link>
       </header>
 
       {/* Features Section */}

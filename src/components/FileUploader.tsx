@@ -5,7 +5,7 @@ import { useDropzone } from 'react-dropzone'
 import useUpload from '../../hooks/useUpload';
 
 export default   function  MyDropzone() {
-    const {progress,handleUpload,status,fieldId}=useUpload();
+    const {progress,handleUpload,status}=useUpload();
     const onDrop = useCallback(async (acceptedFiles: File[]) => {
         // Do something with the files
 

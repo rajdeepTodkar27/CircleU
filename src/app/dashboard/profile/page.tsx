@@ -154,7 +154,7 @@ function handleSkillsChange(event: React.ChangeEvent<HTMLInputElement>) {
 
           <div className="space-y-2">
             <Label htmlFor="email">Email</Label>
-            <Input id="email" name="email" type="email" required value={email}  className="bg-gray-100" />
+            <Input id="email" name="email" type="email" readOnly  required value={email}  className="bg-gray-100" />
           </div>
 
           <div className="space-y-2">

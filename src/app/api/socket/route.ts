@@ -1,25 +1,48 @@
-import { Server as SocketIOServer } from 'socket.io';
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from "next/server";
+import { Server as HttpServer } from "http";
+import { Server as SocketIOServer, Socket } from "socket.io";
 
-export const GET = (req: Request) => {
-  const { socket } = (req as any).server;
-  
-  if (socket?.io) {
-    console.log('Socket.IO already running');
-  } else {
-    console.log('Initializing Socket.IO');
-    const io = new SocketIOServer(socket, {
-      path: '/socket.io',
+type GlobalWithIO = typeof globalThis & { io?: SocketIOServer };
+
+export async function GET(req: NextRequest) {
+  const globalWithIO = global as GlobalWithIO;
+
+  if (!globalWithIO.io) {
+    console.log("Initializing WebSocket server...");
+
+    // Check if the HTTP server exists
+    if (!(global as any).httpServer) {
+      return NextResponse.json({ error: "HTTP Server not found" }, { status: 500 });
+    }
+
+    // Attach Socket.IO to the global HTTP server
+    globalWithIO.io = new SocketIOServer((global as any).httpServer, {
+      path: "/api/socket",
+      cors: {
+        origin: "*",
+        methods: ["GET", "POST"],
+      },
     });
-    (req as any).server.io = io;
 
-    io.on('connection', (socket) => {
-      console.log('a user connected');
-      socket.on('disconnect', () => {
-        console.log('user disconnected');
+    // Handle WebSocket connections
+    globalWithIO.io.on("connection", (socket: Socket) => {
+      console.log("New client connected:", socket.id);
+
+      socket.on("join-room", (roomId: string) => {
+        socket.join(roomId);
+        console.log(`${socket.id} joined room ${roomId}`);
+      });
+
+      socket.on("send-message", (message: { roomId: string; content: string; userId: string; username: string }) => {
+        globalWithIO.io?.to(message.roomId).emit("receive-message", message);
+        console.log("Message sent to room:", message);
+      });
+
+      socket.on("disconnect", () => {
+        console.log("Client disconnected:", socket.id);
       });
     });
   }
 
-  return NextResponse.json({ status: 'Socket Initialized' });
-};
+  return NextResponse.json({ message: "WebSocket Server Ready" });
+}

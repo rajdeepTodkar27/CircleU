@@ -49,22 +49,26 @@ const dashboard = () => {
   
   return (
     <div className="overflow-auto scrollbar-hide p-5 h-full ">
-      <h1 className="text-center mt-5 font-bold text-4xl text-blue-500">Welcome to CircleU </h1>
-        <p className="text-center text-xl pt-4">Connect with your college community, join groups, and participate in events</p>
+      <div className="hero  bg-blue-200 p-10 py-14 rounded-xl ">
+      <h1 className="text-center mt-5 font-bold text-4xl text-blue-600">Welcome to CircleU </h1>
+        <p className="text-center text-xl pt-4">Connect with your college community, join groups, and participate in events !</p>
       <div className="upcoming-events flex flex-col ">
-        <h1 className="pl-10 mt-5 mb-9  font-bold text-3xl text-blue-500">Upcoming Events.......</h1>
+        <h1 className="pl-10 mt-5 mb-9  font-bold text-3xl text-blue-500 ">Upcoming Events.......</h1>
         <div className="card-container h-44 relative flex flex-wrap justify-center px-5 pl-10  gap-5">
           
           {events.length > 0 ? (
-            events.map((event) => (
+             events
+             .sort((a, b) => new Date(a.event_date).getTime() - new Date(b.event_date).getTime())
+             .slice(0, 4).map((event) => (
               <div key={event._id} className="card p-5 border-2 w-[20vw] text-center bg-white rounded-lg shadow-md">
-                <h1 className="font-bold">{event.event_name}</h1>
-                <p className="text-sm">{event.organization_name}</p>
+                <h1 className="font-bold text-xl ">{event.event_name}</h1>
+                <p className="text-sm pt-3">{event.organization_name}</p>
                 <p className="text-xs text-gray-600">Date: {new Date(event.event_date).toDateString()}</p>
-                <div className="btncont absolute flex text-center bottom-4 ml-24 justify-center items-center">
+                <div className="btncont absolute flex text-center bottom-4 ml-20 justify-center items-center">
 
-                <button className="mt-2  p-2 px-4   bg-blue-500 text-white rounded-lg" onClick={handleClick4}>Join</button>
+                <button className="mt-2  p-2 px-3   bg-blue-500 text-white rounded-lg" onClick={handleClick4}>Join</button>
                 </div>
+             
               </div>
             ))
           ) : (
@@ -74,44 +78,46 @@ const dashboard = () => {
 
           </div>
       </div>
-      <div className="cards flex flex-wrap gap-2 justify-center mt-10 ">
-        <Card className="sm:w-64 sm:h-64 h-32 w-44 flex  flex-col items-center bg-gradient-to-bl from-blue-500 to-blue-200 ">
+      </div>
+        <h1 className="text-center mt-5 font-bold text-4xl text-blue-500"> Hello section</h1>
+      <div className="cards flex  flex-wrap gap-20 justify-center mt-10 ">
+        <Card className="sm:w-64 sm:h-56 h-32 w-44 flex  flex-col items-center ">
           <CardHeader>
-            <CardTitle>Create You Group</CardTitle>
+            <CardTitle className="text-xl" >Create You Group</CardTitle>
             <CardDescription>Create your own group</CardDescription>
           </CardHeader>
           <CardContent>
             <p>Create your own group</p>
           </CardContent>
           <CardFooter>
-            <Button onClick={handleClick1}>Create</Button>
+            <Button onClick={handleClick1} className="bg-blue-500">Create</Button>
           </CardFooter>
         </Card>
-        <Card className="sm:w-64 sm:h-64 h-44 w-44 flex  flex-col  items-center  bg-gradient-to-bl from-blue-500 to-blue-200">
+        <Card className="sm:w-64 sm:h-56 h-44 w-44 flex  flex-col  items-center ">
 
           <CardHeader>
-            <CardTitle>Find groupmates !!!</CardTitle>
+            <CardTitle className="text-xl">Find groupmates !!!</CardTitle>
             <CardDescription>Find your groupmates</CardDescription>
           </CardHeader>
           <CardContent>
             <p>Find your groupmates</p>
           </CardContent>
           <CardFooter>
-            <Button onClick={handleClick2}>Find</Button>
+            <Button onClick={handleClick2} className="bg-blue-500">Find 🔍</Button>
           </CardFooter>
         </Card>
        
-        <Card className="sm:w-64 sm:h-64 h-44 w-44 flex  flex-col  items-center  bg-gradient-to-bl from-blue-500 to-blue-200">
+        <Card className="sm:w-64 sm:h-56 h-44 w-44 flex  flex-col text-center  items-center ">
 
           <CardHeader>
-            <CardTitle>Create Events !!!</CardTitle>
+            <CardTitle className="text-xl">Create Events !!!</CardTitle>
             <CardDescription>Find a perfect event for you</CardDescription>
           </CardHeader>
           <CardContent>
             <p>Find a perfect event</p>
           </CardContent>
           <CardFooter>
-            <Button onClick={handleClick3}>Find</Button>
+            <Button onClick={handleClick3} className="bg-blue-500">Create</Button>
           </CardFooter>
         </Card>
        

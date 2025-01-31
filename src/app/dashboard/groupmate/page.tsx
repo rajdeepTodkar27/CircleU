@@ -61,9 +61,9 @@ export default function GroupmatesPage() {
               className="border flex flex-col gap-2 items-center border-gray-300 p-10 rounded-lg shadow-md"
             >
               <h2 className="text-xl  font-semibold">{groupmate.name}</h2>
-              <p className="text-sm text-gray-600">{groupmate.email}</p>
-              <p className="text-sm text-gray-600">{groupmate.college}</p>
-              <p className="text-sm text-gray-600">{groupmate.domain}</p>
+              <p className="text-sm text-gray-600">{groupmate.skills.join(", ")}</p>
+              <p className="text-sm text-gray-600">{groupmate.degree}</p>
+              {/* <p className="text-sm text-gray-600">{groupmate.college}</p> */}
               <button className="mt-2 p-2 bg-blue-600  hover:bg-blue-900 text-white rounded-md"> Send Request</button>
             </div>
           ))}

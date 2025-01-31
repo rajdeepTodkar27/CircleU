@@ -17,9 +17,6 @@ interface EventForm {
   contact_person_name: string;
   contact_person_email: string;
   contact_person_phone: string;
-  email: string;
-  subject: string;
-  message: string;
 }
 
 const ContactPage: React.FC = () => {
@@ -38,9 +35,7 @@ const ContactPage: React.FC = () => {
     contact_person_name: "",
     contact_person_email: "",
     contact_person_phone: "",
-    email: "",
-    subject: "",
-    message: ""
+    
   })
   const [buttonDisabled, setButtonDisabled] = useState<boolean>(true)
 
@@ -63,10 +58,8 @@ const ContactPage: React.FC = () => {
         max_participants: "",
         contact_person_name: "",
         contact_person_email: "",
-        contact_person_phone: "",
-        email: "",
-        subject: "",
-        message: ""
+        contact_person_phone: ""
+        
       })
     } catch (error: any) {
       console.error("Message failed", error)
@@ -85,10 +78,10 @@ const ContactPage: React.FC = () => {
     <div className="flex flex-col items-center justify-center min-h-screen p-4  ">
       <h1 className='font-bold text-4xl mb-4'>Fill Information for Event</h1>
       <div className="w-full max-w-lg bg-white p-6 rounded-lg shadow-lg">
-        <form className="flex flex-col space-y-4">
+        <form className="flex flex-col space-y-4 text-center">
           {(Object.keys(user) as Array<keyof EventForm>).map((key) => (
             <div key={key}>
-              <label className="font-bold text-blue-600" htmlFor={key}>{key.replace(/_/g, ' ')}</label>
+              <label className="font-bold  text-blue-600" htmlFor={key}>{key.replace(/_/g, ' ')}</label>
               <input
                 id={key}
                 type={key.includes("date") ? "date" : key.includes("email") ? "email" : "text"}
