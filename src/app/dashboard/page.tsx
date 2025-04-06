@@ -21,19 +21,19 @@ import { useEffect, useState } from "react";
 const dashboard = () => {
   const router = useRouter();
   const [events, setEvents] = useState<Event[]>([]);
-  
- const handleClick1 = () => {
+
+  const handleClick1 = () => {
     router.push("/dashboard/Groups")
   }
- const handleClick2 = () => {
+  const handleClick2 = () => {
     router.push("/dashboard/groupmate")
   }
- const handleClick3 = () => {
+  const handleClick3 = () => {
     router.push("/dashboard/event")
   }
- 
+
   const handleClick4 = () => {
-    router.push("/dashboard/participate")
+    router.push("/dashboard/event-results")
   }
   useEffect(() => {
     const fetchEvents = async () => {
@@ -46,83 +46,121 @@ const dashboard = () => {
     };
     fetchEvents();
   }, []);
-  
-  return (
-    <div className="overflow-auto scrollbar-hide p-5 h-full ">
-      <div className="hero  bg-blue-200 p-10 py-14 rounded-xl ">
-      <h1 className="text-center mt-5 font-bold text-4xl text-blue-600">Welcome to CircleU </h1>
-        <p className="text-center text-xl pt-4">Connect with your college community, join groups, and participate in events !</p>
-      <div className="upcoming-events flex flex-col ">
-        <h1 className="pl-10 mt-5 mb-9  font-bold text-3xl text-blue-500 ">Upcoming Events.......</h1>
-        <div className="card-container h-44 relative flex flex-wrap justify-center px-5 pl-10  gap-5">
-          
-          {events.length > 0 ? (
-             events
-             .sort((a, b) => new Date(a.event_date).getTime() - new Date(b.event_date).getTime())
-             .slice(0, 4).map((event) => (
-              <div key={event._id} className="card p-5 border-2 w-[20vw] text-center bg-white rounded-lg shadow-md">
-                <h1 className="font-bold text-xl ">{event.event_name}</h1>
-                <p className="text-sm pt-3">{event.organization_name}</p>
-                <p className="text-xs text-gray-600">Date: {new Date(event.event_date).toDateString()}</p>
-                <div className="btncont absolute flex text-center bottom-4 ml-20 justify-center items-center">
 
-                <button className="mt-2  p-2 px-3   bg-blue-500 text-white rounded-lg" onClick={handleClick4}>Join</button>
+  return (
+    <div className="overflow-auto scrollbar-hide p-5 min-h-screen">
+  <div className="hero bg-blue-200 px-5 py-12 rounded-2xl">
+    <h1 className="text-center font-bold text-3xl md:text-4xl text-blue-600">
+      Welcome to CircleU
+    </h1>
+    <p className="text-center text-base md:text-xl pt-3">
+      Connect with your college community, join groups, and participate in events!
+    </p>
+
+    <div className="upcoming-events mt-8">
+      <h2 className="pl-5 text-2xl md:text-3xl font-bold text-blue-500 mb-6">
+        Upcoming Events
+      </h2>
+      <div className="card-container flex flex-wrap justify-center gap-6 px-2">
+        {events.length > 0 ? (
+          events
+            .sort((a, b) => new Date(a.event_date) - new Date(b.event_date))
+            .slice(0, 4)
+            .map((event) => (
+              <div
+                key={event._id}
+                className="w-full sm:w-[80%] md:w-[45%] lg:w-[30%] xl:w-[22%] bg-white p-5 rounded-2xl shadow-md border border-gray-200 text-center transition-transform hover:scale-105 duration-300"
+              >
+                <h3 className="font-bold text-lg md:text-xl text-gray-800">
+                  {event.event_name}
+                </h3>
+                <p className="text-sm text-gray-600 mt-1">{event.organization_name}</p>
+                <p className="text-xs text-gray-500 mt-1">
+                  📅 {new Date(event.event_date).toDateString()}
+                </p>
+                <div className="mt-5">
+                  <button
+                    onClick={handleClick4}
+                    className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm rounded-lg shadow transition"
+                  >
+                    Join
+                  </button>
                 </div>
-             
               </div>
             ))
-          ) : (
-            <p className="text-gray-600">No upcoming events found.</p>
-          )}
-         
-
-          </div>
+        ) : (
+          <p className="text-gray-600 text-center w-full">No upcoming events found.</p>
+        )}
       </div>
-      </div>
-        <h1 className="text-center mt-5 font-bold text-4xl text-blue-500"> Hello section</h1>
-      <div className="cards flex  flex-wrap gap-20 justify-center mt-10 ">
-        <Card className="sm:w-64 sm:h-56 h-32 w-44 flex  flex-col items-center ">
-          <CardHeader>
-            <CardTitle className="text-xl" >Create You Group</CardTitle>
-            <CardDescription>Create your own group</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <p>Create your own group</p>
-          </CardContent>
-          <CardFooter>
-            <Button onClick={handleClick1} className="bg-blue-500">Create</Button>
-          </CardFooter>
-        </Card>
-        <Card className="sm:w-64 sm:h-56 h-44 w-44 flex  flex-col  items-center ">
+    </div>
+  </div>
 
-          <CardHeader>
-            <CardTitle className="text-xl">Find groupmates !!!</CardTitle>
-            <CardDescription>Find your groupmates</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <p>Find your groupmates</p>
-          </CardContent>
-          <CardFooter>
-            <Button onClick={handleClick2} className="bg-blue-500">Find 🔍</Button>
-          </CardFooter>
-        </Card>
-       
-        <Card className="sm:w-64 sm:h-56 h-44 w-44 flex  flex-col text-center  items-center ">
+  <h2 className="text-center mt-10 font-bold text-3xl md:text-4xl text-blue-500">
+    Hello Section
+  </h2>
 
-          <CardHeader>
-            <CardTitle className="text-xl">Create Events !!!</CardTitle>
-            <CardDescription>Find a perfect event for you</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <p>Find a perfect event</p>
-          </CardContent>
-          <CardFooter>
-            <Button onClick={handleClick3} className="bg-blue-500">Create</Button>
-          </CardFooter>
-        </Card>
-       
-      </div>
-    </div >
+  <div className="cards flex flex-wrap gap-8 justify-center mt-10">
+    <Card className="w-40 sm:w-60 md:w-64 h-auto flex flex-col items-center p-3 text-center">
+      <CardHeader>
+        <CardTitle className="text-lg md:text-xl">Create Your Group</CardTitle>
+        <CardDescription>Create your own group</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <p>Create your own group</p>
+      </CardContent>
+      <CardFooter>
+        <Button onClick={handleClick1} className="bg-blue-500">
+          Create
+        </Button>
+      </CardFooter>
+    </Card>
+
+    <Card className="w-40 sm:w-60 md:w-64 h-auto flex flex-col items-center p-3 text-center">
+      <CardHeader>
+        <CardTitle className="text-lg md:text-xl">Find Groupmates</CardTitle>
+        <CardDescription>Find your groupmates</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <p>Find your groupmates</p>
+      </CardContent>
+      <CardFooter>
+        <Button onClick={handleClick2} className="bg-blue-500">
+          Find 🔍
+        </Button>
+      </CardFooter>
+    </Card>
+
+    <Card className="w-40 sm:w-60 md:w-64 h-auto flex flex-col items-center p-3 text-center">
+      <CardHeader>
+        <CardTitle className="text-lg md:text-xl">Create Events</CardTitle>
+        <CardDescription>Find a perfect event for you</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <p>Find a perfect event</p>
+      </CardContent>
+      <CardFooter>
+        <Button onClick={handleClick3} className="bg-blue-500">
+          Create
+        </Button>
+      </CardFooter>
+    </Card>
+    <Card className="w-40 sm:w-60 md:w-64 h-auto flex flex-col items-center p-3 text-center">
+      <CardHeader>
+        <CardTitle className="text-lg md:text-xl">Event Results</CardTitle>
+        <CardDescription>Check outcomes</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <p>latest event results </p>
+      </CardContent>
+      <CardFooter>
+        <Button onClick={handleClick4} className="bg-blue-500">
+        View Results
+        </Button>
+      </CardFooter>
+    </Card>
+  </div>
+</div>
+
   )
 }
 

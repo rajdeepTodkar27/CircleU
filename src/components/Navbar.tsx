@@ -8,7 +8,7 @@ import { Button } from "./ui/button"
 function Navbar() {
   const router = useRouter();
   return (
-    <div className="flex justify-between top-0 sticky">
+    <div className="flex justify-between top-0 z-50 sticky">
       <div className="flex flex-1 justify-between  items-center bg-gradient-to-bl from-blue-700 to-blue-100 p-3 text-lg  ">
         <Link href="/dashboard" ><h1 className="text-2xl font-bold "> Circle <span className="text-yellow-50">U</span></h1></Link>
         <MenuIcon className="sm:hidden cursor-pointer" />
@@ -22,7 +22,7 @@ function Navbar() {
             {/* <span className="text-lg cursor-pointer text-purple-200" onClick={() => router.push("/dashboard/contact-us")}>Contact Us</span> */}
             <span className="text-lg cursor-pointer text-purple-200" onClick={() => router.push("/dashboard/profile")}>Profile</span>
             <UserButton />
-          </>
+          </SignedIn>
         </h2>
 
       </div>

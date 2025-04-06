@@ -17,6 +17,8 @@ export default function AdminPanel() {
       const data = await res.json();
       if (data.success) {
         setEventCounts(data.eventCounts); // Populate event counts
+        setEvents(data.eventlist)
+
       } else {
         setEventCounts([]);
       }
@@ -82,7 +84,7 @@ export default function AdminPanel() {
         >
           <option value="">Select an Event</option>
           {events.map((event, index) => (
-            <option key={index} value={event}>{event}</option>
+            <option key={index} value={event.event_name}>{event.event_name}</option>
           ))}
         </select>
       </div>

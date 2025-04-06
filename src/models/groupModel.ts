@@ -10,7 +10,7 @@ interface IHackathon extends Document {
   teamMembers: string[];
 }
 
-// Define the Schema
+
 const HackathonSchema: Schema<IHackathon> = new Schema(
   {
     hackathonName: { type: String, required: true, trim: true },
@@ -18,12 +18,11 @@ const HackathonSchema: Schema<IHackathon> = new Schema(
     problemStatement: { type: String, required: true, trim: true },
     details: { type: String, required: true, trim: true },
     teamLeader: { type: String, required: true, trim: true },
-    teamMembers: { type: [String], required: true }, // Array of team member names
+    teamMembers: { type: [String], required: true },
   },
-  { timestamps: true } // Automatically adds createdAt & updatedAt
+  { timestamps: true } 
 );
 
-// Define and Export the Model
 const Hackathon: Model<IHackathon> =
   mongoose.models.Hackathon || mongoose.model<IHackathon>("Hackathon", HackathonSchema);
 

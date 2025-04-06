@@ -26,7 +26,7 @@ export async function POST(request: Request) {
 }
 export async function GET() {
     try {
-        const allData = await Groupmate.find({}); // ✅ FIXED: Removed `.toArray()`
+        const allData = await Groupmate.find({}); 
         console.log("Fetched data:", allData);
         return NextResponse.json({ success: true, data: allData });
     } catch (error) {

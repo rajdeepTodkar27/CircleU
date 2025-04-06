@@ -3,8 +3,9 @@
 import { useRouter } from "next/navigation";
 import Script from "next/script";
 import { useForm } from "react-hook-form";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
+
 declare global {
   interface Window {
     Razorpay: any;
@@ -13,7 +14,6 @@ declare global {
 
 type FormData = {
   name: string;
-  teamname: string;
   email: string;
   phone: string;
   linkedin?: string;
@@ -23,64 +23,51 @@ type FormData = {
 
 export default function RegisterPage() {
   const router = useRouter();
-  const [eventlist, seteventlist] = useState([])
   const [message, setMessage] = useState("");
-  const { register, handleSubmit, reset,setValue, watch } = useForm<FormData>({
+  const [evenlist, setEvenlist] = useState<any[]>([]);
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    watch,
+    setValue,
+  } = useForm<FormData>({
     defaultValues: {
       name: "",
-      teamname: "",
       email: "",
       phone: "",
       linkedin: "",
       event: "",
-      fee:0,
+      fee: 0,
     },
   });
+
   const form = watch();
-  const selecteevent=watch("event")
-  useEffect(() => { 
-    axios.get("/api/events/upcoming")
-    .then(res=>{
-      seteventlist(res.data)
-      
-    }).catch(err=>{
-      setMessage(err)
-    })
-}, [])
 
-useEffect(() => {
-  if (selecteevent  && eventlist[selecteevent].registration_fee) {
-    console.log(selecteevent);
-    setValue("fee", eventlist[selecteevent].registration_fee)
-    // setValue("fee", eventFees[selectedEvent]);
-  } else {
-    setValue("fee", 0);
-  }
-  
-}, [selecteevent])
+  useEffect(() => {
+    axios
+      .get("/api/events/upcoming")
+      .then((res) => {
+        setEvenlist(res.data);
+      })
+      .catch((err) => {
+        console.error("Error fetching events:", err);
+        setMessage("Failed to load events.");
+      });
+  }, []);
 
-
+  useEffect(() => {
+    const selected = evenlist.find((e) => e.name === form.event);
+    if (selected) {
+      setValue("fee", selected.fee);
+    }
+  }, [form.event, evenlist, setValue]);
 
   const onSubmit = async (data: FormData) => {
     setMessage("Submitting...");
-    console.log("Form Data:", data);
-    data.event=eventlist[data.event].event_name
-    console.log("Form Data:", data);
 
     try {
-      const checkParticipant = await fetch("/api/users/create-participation/check-participation", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({form:data}),
-      });
-
-      const checkresult =await checkParticipant.json()
-
-      if(checkresult.participated){
-        setMessage("You have already registered for this event.")
-        return ;
-      }
-
       const payres = await fetch("/api/payRfees", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -98,26 +85,27 @@ useEffect(() => {
         order_id: responseData.orderId,
 
         handler: async function (response: any) {
-          console.log("Payment Success!", response);
           alert("Payment Successful!");
-          setMessage("");
 
           try {
-            const saveparticipant = await fetch("/api/users/create-participation", {
+            const saveRes = await fetch("/api/users/create-participation", {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({ form: data, data: responseData }),
             });
 
-            const result = await saveparticipant.json();
+            const result = await saveRes.json();
 
             if (result.success) {
               alert(result.message);
+              setMessage("");
               reset();
-            } 
+            } else {
+              setMessage(result.message || "Something went wrong.");
+            }
           } catch (error) {
             console.error("API Error:", error);
-            setMessage("Failed to save participation details in the server.");
+            setMessage("Failed to save participation details.");
           }
         },
 
@@ -149,6 +137,7 @@ useEffect(() => {
 
       <div className="max-w-md mt-10 mx-auto p-6 bg-white shadow-lg rounded-lg">
         <h2 className="text-xl font-bold mb-4">Event Registration</h2>
+
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
           <label className="block">
             <span className="text-gray-700">Full Name</span>
@@ -156,15 +145,6 @@ useEffect(() => {
               type="text"
               placeholder="Full Name"
               {...register("name", { required: true })}
-              className="w-full p-2 border rounded"
-            />
-          </label>
-          <label className="block">
-            <span className="text-gray-700">Team Name</span>
-            <input
-              type="text"
-              placeholder="Team Name"
-              {...register("teamname", { required: true })}
               className="w-full p-2 border rounded"
             />
           </label>
@@ -206,9 +186,10 @@ useEffect(() => {
               className="w-full p-2 border rounded"
             >
               <option value="">Select an Event</option>
-              {eventlist.map((event,index)=>(
-
-              <option key={index} value={index}>{event.event_name}</option>
+              {evenlist.map((event) => (
+                <option key={event._id} value={event.name}>
+                  {event.name}
+                </option>
               ))}
             </select>
           </label>
@@ -230,6 +211,7 @@ useEffect(() => {
             Pay & Register
           </button>
         </form>
+
         {message && <p className="mt-4 text-center">{message}</p>}
       </div>
     </>

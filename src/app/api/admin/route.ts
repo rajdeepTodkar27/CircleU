@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
 import { dbconnect } from "@/dbConfig/dfConfig";
 import Participant from "@/models/PartcipantsModel";
-
+import Event from "@/models/eventModel";
+import { log } from "console";
 export async function GET(req: Request) {
   try {
     await dbconnect();
@@ -19,8 +20,10 @@ export async function GET(req: Request) {
       const eventCounts = await Participant.aggregate([
         { $group: { _id: "$event", count: { $sum: 1 } } }
       ]);
-
-      return NextResponse.json({ success: true, eventCounts }, { status: 200 });
+      const eventlist= await Event.find({}).select("event_name -_id")
+      console.log(eventlist);
+      
+      return NextResponse.json({ success: true, eventCounts,eventlist }, { status: 200 });
     }
 
   } catch (error) {
